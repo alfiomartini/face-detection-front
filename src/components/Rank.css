@@ -1,0 +1,9 @@
+.rank {
+  display: block;
+  margin: 5px auto;
+  width: 270px;
+  /* flex-direction: column;
+  align-items: center; */
+  font-variant: small-caps;
+  background-color: #c89666;
+}

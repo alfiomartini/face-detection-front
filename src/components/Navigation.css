@@ -1,0 +1,11 @@
+.navigation {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  /* default is stretch */
+  align-items: center;
+}
+
+.navigation > button {
+  margin: 20px;
+}
