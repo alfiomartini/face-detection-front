@@ -46,12 +46,12 @@ class App extends Component{
   }
 
   onInputChange = (event) => {
-    console.log(event.target.value);
+    // console.log(event.target.value);
     this.setState({input: event.target.value});
   } 
 
   onSubmit = (event) => {
-    console.log('click', event.target);
+    // console.log('click', event.target);
     this.setState({imageURL: this.state.input});
     app.models
       .predict(
@@ -67,8 +67,9 @@ class App extends Component{
         Clarifai.FACE_DETECT_MODEL,
         // 'https://samples.clarifai.com/face-det.jpg')
         this.state.input)
-      .then(response => {
-        console.log('hi', response);
+      .then(resp => {
+        // console.log(resp);
+        console.log(resp.outputs[0].data.regions[0].region_info.bounding_box);
       })
       .catch(err => console.log(err));
   }

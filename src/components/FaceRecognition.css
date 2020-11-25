@@ -1,7 +1,7 @@
 .face-image > img {
   margin: 20px;
   width: 400px;
-  height: 300px;
+  height: auto;
   border-radius: 10px;
 }
 .face-image {
