@@ -1,0 +1,10 @@
+.face-image > img {
+  margin: 20px;
+  width: 400px;
+  height: 300px;
+  border-radius: 10px;
+}
+.face-image {
+  display: flex;
+  justify-content: center;
+}
