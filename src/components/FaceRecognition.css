@@ -18,3 +18,9 @@
   border: 3px lightblue solid;
   cursor: pointer;
 }
+
+@media (max-width: 500px) {
+  .face-image img {
+    width: 300px;
+  }
+}

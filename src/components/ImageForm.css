@@ -17,3 +17,9 @@
 .image-form p {
   font-variant: small-caps;
 }
+
+@media (max-width: 500px) {
+  .image-form input {
+    width: 250px;
+  }
+}
