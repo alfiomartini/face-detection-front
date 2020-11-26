@@ -1,0 +1,13 @@
+.signin-form {
+  width: 25%;
+  margin: 10px auto;
+  padding: 50px;
+  background-color: #282828;
+  border-radius: 10px;
+  color: whitesmoke;
+}
+
+.form-btn {
+  display: flex;
+  justify-content: center;
+}
