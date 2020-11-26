@@ -41,8 +41,33 @@ class App extends Component{
     super();
     this.state = {
       input:'',
-      imageURL:''
+      imageURL:'',
+      box: {}
     }
+  }
+
+  calcFaceLocation = (data) => {
+    const { top_row, 
+            left_col, 
+            right_col, 
+            bottom_row } = data.outputs[0].data.regions[0].region_info.bounding_box;
+    const image = document.getElementById('inputImg');
+    const width = Number(image.width);
+    const height = Number(image.height);
+    // console.log(width, height);
+    // this object mimics how position works in css
+    // see: https://css-tricks.com/almanac/properties/t/top-right-bottom-left/
+    return {
+      left : left_col * width,
+      top : top_row * height,
+      right: width - (right_col * width),
+      bottom : height - (bottom_row * height)
+    }
+  }
+
+  displayFaceBox = (box) => {
+    console.log('box', box);
+    this.setState({box:box});
   }
 
   onInputChange = (event) => {
@@ -69,7 +94,12 @@ class App extends Component{
         this.state.input)
       .then(resp => {
         // console.log(resp);
-        console.log(resp.outputs[0].data.regions[0].region_info.bounding_box);
+        // console.log(resp.outputs[0].data.regions[0].region_info.bounding_box);
+        const box = this.calcFaceLocation(resp);
+        this.displayFaceBox(box);
+        // resp.outputs[0].data.regions.forEach(region => {
+        //    console.log(region.region_info.bounding_box);
+        // });
       })
       .catch(err => console.log(err));
   }
@@ -86,7 +116,7 @@ class App extends Component{
         </div>
         <Rank />
         <ImageForm onInputChange = {this.onInputChange} onSubmit = {this.onSubmit}/>
-        <FaceRecognition imageURL = {this.state.imageURL} />
+        <FaceRecognition imageURL = {this.state.imageURL} box = {this.state.box} />
       </div>
     );
   }

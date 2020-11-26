@@ -1,10 +1,20 @@
-.face-image > img {
-  margin: 20px;
+.face-image img {
   width: 400px;
   height: auto;
   border-radius: 10px;
 }
+
 .face-image {
   display: flex;
   justify-content: center;
+}
+
+.image-box {
+  position: relative;
+}
+
+.bounding-box {
+  position: absolute;
+  border: 3px lightblue solid;
+  cursor: pointer;
 }
