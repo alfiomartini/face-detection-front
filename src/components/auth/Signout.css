@@ -1,0 +1,11 @@
+.signout {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  /* default is stretch */
+  align-items: center;
+}
+
+.signout > button {
+  margin: 20px;
+}

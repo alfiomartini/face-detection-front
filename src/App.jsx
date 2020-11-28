@@ -1,14 +1,13 @@
 import { React, Component } from 'react';
 import './App.css';
-import Navigation from './Navigation.jsx';
-import Logo from './Logo.jsx';
-import ImageForm from './ImageForm.jsx';
-import Rank from './Rank.jsx';
+import Navigation from './components//Navigation.jsx';
+import ImageForm from './components/ImageForm.jsx';
+import Rank from './components/Rank.jsx';
 import Particles from 'react-particles-js';
 import Clarifai from 'clarifai';
-import FaceRecognition from './FaceRecognition.jsx'
-import Signin from './signin/Signin.jsx';
-import Signup from './signin/Signup.jsx';
+import FaceRecognition from './components/FaceRecognition.jsx'
+import Signin from './components/auth/Signin.jsx';
+import Signup from './components/auth/Signup.jsx';
 
 const app = new Clarifai.App(
   // have to save this in an environment variable
@@ -117,14 +116,7 @@ class App extends Component{
         <Particles className='particles'
                 params={particlesParams}
         />
-        <div className='header'>
-          <Logo />
-          {
-            this.state.route === 'signin' || this.state.route === 'signup'
-            ? false
-            : <Navigation onRouteChange={this.onRouteChange} /> 
-          } 
-        </div>
+        <Navigation onRouteChange={this.onRouteChange} state={this.state}/>
         {
           this.state.route === 'signin' 
           ? <Signin onRouteChange={this.onRouteChange}/>

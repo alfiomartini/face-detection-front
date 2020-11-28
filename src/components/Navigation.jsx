@@ -1,13 +1,18 @@
 import React from 'react';
 import './Navigation.css';
+import Logo from './Logo';
+import Signout from './auth/Signout';
 
 const Navigation = (props) => {
-  const { onRouteChange } = props;
+  const { onRouteChange, state } = props;
   return (
-    <div className='navigation'>
-      {/* <button className='btn btn-secondary'> Sign in</button> */}
-      <button className='btn btn-dark' type='button'
-       onClick={()=>{onRouteChange('signin')}} id='signout-btn'> Sign out</button>
+    <div className='header'>
+      <Logo />
+      {
+        state.route === 'signin' || state.route === 'signup'
+        ? false
+        : <Signout onRouteChange={onRouteChange} /> 
+      } 
     </div>
   )
 }
