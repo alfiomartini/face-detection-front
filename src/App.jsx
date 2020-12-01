@@ -41,11 +41,18 @@ class App extends Component{
   constructor(){
     super();
     this.state = {
+      // input and imageURL contain the same data
       input:'',
       imageURL:'',
       box: {},
       route: 'signin'
     }
+  }
+
+  componentDidMount(){
+    fetch('http://localhost:3100')
+      .then(resp => resp.json())
+      .then(data => console.log(data))
   }
 
   calcFaceLocation = (data) => {

@@ -11,3 +11,7 @@
   display: flex;
   justify-content: center;
 }
+
+.signup-error-hide {
+  display: none;
+}
