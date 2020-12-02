@@ -96,8 +96,11 @@ class App extends Component{
       method:'put'
     })
       .then (resp => resp.json())
-      .then (data => {
-        console.log(data);
+      .then (count => {
+        if (count){
+          console.log('count', count);
+          this.setState(Object.assign(this.state.user,{entries:count}));
+        }
       })
       .catch(error => console.log(error))
   }
