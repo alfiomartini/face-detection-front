@@ -22,7 +22,6 @@ class Signin extends Component{
   }
 
   onSubmitSignin = () => {
-    console.log(this.state);
     const { signInEmail, signInPassword} = this.state;
     fetch('http://localhost:3100/signin', {
       method:'post',
@@ -36,6 +35,7 @@ class Signin extends Component{
       .then (data => {
         console.log(data);
         if (data.status === 200){
+          this.props.loadUser(data.user);
           this.props.onRouteChange('home');
         }
         else {
@@ -46,7 +46,7 @@ class Signin extends Component{
       })
   }
   render(){
-    const { onRouteChange } = this.props;
+    const { onRouteChange} = this.props;
     return (
       <div  className='signin-form'>
         <h4 className='text-center'>Sign in </h4>

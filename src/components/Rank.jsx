@@ -1,14 +1,15 @@
 import React from 'react';
 import './Rank.css';
 
-const Rank = () => {
+const Rank = (props) => {
+  const { name, rank } = props;
   return (
     <div className='rank mt-4 text-center'>
-      <div className=''>
-       {'Alfio, your current rank is...'}
+      <div className='rank-message'>
+        {`${name}, your current rank is ...`}
       </div>
-      <div className=''>
-        {'#5'}
+      <div className='rank-number'>
+        {`${rank}`}
       </div>
     </div>
   )

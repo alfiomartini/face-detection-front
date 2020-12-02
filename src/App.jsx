@@ -45,8 +45,19 @@ class App extends Component{
       input:'',
       imageURL:'',
       box: {},
-      route: 'signin'
+      route: 'signin',
+      user:{
+        id:0,
+        name:'',
+        email:'',
+        entries:0,
+        joined:''
+      }
     }
+  }
+
+  loadUser = (user) => {
+    this.setState({user:user});
   }
 
   componentDidMount(){
@@ -79,33 +90,35 @@ class App extends Component{
     this.setState({box:box});
   }
 
+  updateRank = () => {
+    const { user } = this.state;
+    fetch(`http://localhost:3100/image/${user.id}`, {
+      method:'put'
+    })
+      .then (resp => resp.json())
+      .then (data => {
+        console.log(data);
+      })
+      .catch(error => console.log(error))
+  }
+
   onInputChange = (event) => {
-    // console.log(event.target.value);
     this.setState({input: event.target.value});
   } 
 
   onSubmit = (event) => {
-    // console.log('click', event.target);
     this.setState({imageURL: this.state.input});
     app.models
       .predict(
-        // HEADS UP! Sometimes the Clarifai Models can be down or not working as they are constantly getting updated.
-        // A good way to check if the model you are using is up, is to check them on the clarifai website. For example,
-        // for the Face Detect Mode: https://www.clarifai.com/models/face-detection
-        // If that isn't working, then that means you will have to wait until their servers are back up. Another solution
-        // is to use a different version of their model that works like: `c0c0ac362b03416da06ab3fa36fb58e3`
-        // so you would change from:
-        // .predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
-        // to:
-        // .predict('c0c0ac362b03416da06ab3fa36fb58e3', this.state.input)
         Clarifai.FACE_DETECT_MODEL,
-        // 'https://samples.clarifai.com/face-det.jpg')
         this.state.input)
       .then(resp => {
-        // console.log(resp);
-        // console.log(resp.outputs[0].data.regions[0].region_info.bounding_box);
         const box = this.calcFaceLocation(resp);
         this.displayFaceBox(box);
+        this.updateRank();
+        // 'https://samples.clarifai.com/face-det.jpg')
+        // console.log(resp);
+        // console.log(resp.outputs[0].data.regions[0].region_info.bounding_box);
         // resp.outputs[0].data.regions.forEach(region => {
         //    console.log(region.region_info.bounding_box);
         // });
@@ -114,6 +127,7 @@ class App extends Component{
   }
 
   onRouteChange = (route) => {
+    console.log('state', this.state);
     this.setState({route:route});
   }
 
@@ -126,15 +140,16 @@ class App extends Component{
         <Navigation onRouteChange={this.onRouteChange} state={this.state}/>
         {
           this.state.route === 'signin' 
-          ? <Signin onRouteChange={this.onRouteChange}/>
+          ? <Signin onRouteChange={this.onRouteChange} 
+             loadUser={this.loadUser} />
           :(
             this.state.route === 'signup'
-            ? <Signup onRouteChange={this.onRouteChange}/>
+            ? <Signup onRouteChange={this.onRouteChange} loadUser={this.loadUser}/>
             :<div>
-            <Rank />
-            <ImageForm onInputChange = {this.onInputChange} onSubmit = {this.onSubmit}/>
-            <FaceRecognition imageURL = {this.state.imageURL} box = {this.state.box} />
-          </div>
+              <Rank name={this.state.user.name} rank={this.state.user.entries}/>
+              <ImageForm onInputChange = {this.onInputChange} onSubmit = {this.onSubmit}/>
+              <FaceRecognition imageURL = {this.state.imageURL} box = {this.state.box} />
+             </div>
           )      
         }
       </div>

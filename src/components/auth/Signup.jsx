@@ -24,7 +24,6 @@ class Signup extends Component {
   }
 
   onSubmitSignup = () => {
-    console.log(this.state);
     const {signUpName, signUpEmail, signUpPassword} = this.state;
     fetch('http://localhost:3100/register', {
       method:'post',
@@ -39,6 +38,7 @@ class Signup extends Component {
       .then (data => {
         console.log(data);
         if (data.status === 200){
+          this.props.loadUser(data.user);
           this.props.onRouteChange('home');
         }
         else {
