@@ -12,6 +12,11 @@
   justify-content: center;
 }
 
+.signup-error {
+  font-variant: small-caps;
+  font-weight: lighter;
+}
+
 .signup-error-hide {
   display: none;
 }

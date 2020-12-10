@@ -12,6 +12,11 @@
   justify-content: space-between;
 }
 
+.signin-error {
+  font-variant: small-caps;
+  font-weight: lighter;
+}
+
 .signin-error-hide {
   display: none;
 }

@@ -86,19 +86,23 @@ class App extends Component{
   }
 
   displayFaceBox = (box) => {
-    console.log('box', box);
+    // console.log('box', box);
     this.setState({box:box});
   }
 
   updateRank = () => {
     const { user } = this.state;
-    fetch(`http://localhost:3100/image/${user.id}`, {
-      method:'put'
+    fetch(`http://localhost:3100/image`, {
+      method:'put',
+      headers:{'Content-type': 'application/json'},
+      body: JSON.stringify({
+       email:user.email 
+      })
     })
       .then (resp => resp.json())
       .then (count => {
         if (count){
-          console.log('count', count);
+          // console.log('count', count);
           this.setState(Object.assign(this.state.user,{entries:count}));
         }
       })
@@ -130,7 +134,7 @@ class App extends Component{
   }
 
   onRouteChange = (route) => {
-    console.log('state', this.state);
+    // console.log('state', this.state);
     this.setState({route:route});
   }
 

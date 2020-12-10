@@ -31,20 +31,24 @@ class Signin extends Component{
         password:signInPassword
       })
     })
-      .then (resp => resp.json())
-      .then (data => {
-        console.log(data);
-        if (data.status === 200){
-          this.props.loadUser(data.user);
+      .then(resp => resp.json().then(data => {
+        return ({status: resp.status, body: data})
+      }))
+      .then(obj => {
+        console.log('resp', obj);
+        if (obj.status === 200){
+          this.props.loadUser(obj.body.user);
           this.props.onRouteChange('home');
         }
         else {
           const message = document.querySelector('.signin-error');
-          message.innerHTML = data.message;
-          message.classList.toggle('signin-error-hide');
+          message.innerHTML = obj.body.message;
+          message.classList.remove('signin-error-hide');
         }
       })
+      .catch(error => console.log(error));
   }
+
   render(){
     const { onRouteChange} = this.props;
     return (
@@ -63,7 +67,6 @@ class Signin extends Component{
           className='form-control' type="password" name='password'id='password'/>
         </div>
         <div className='signin-error signin-error-hide text-center my-3'>
-            Invalid email or password
         </div>
         <div className='form-btns'>
           <button type='submit' className='btn btn-outline-primary'
