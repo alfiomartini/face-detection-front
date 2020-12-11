@@ -8,6 +8,7 @@ import Clarifai from 'clarifai';
 import FaceRecognition from './components/FaceRecognition.jsx'
 import Signin from './components/auth/Signin.jsx';
 import Signup from './components/auth/Signup.jsx';
+import Navbar from './components/Navbar'
 
 const app = new Clarifai.App(
   // have to save this in an environment variable
@@ -139,25 +140,29 @@ class App extends Component{
   }
 
   render(){
+    const route = this.state.route;
     return (
       <div className="App">
         <Particles className='particles'
                 params={particlesParams}
         />
-        <Navigation onRouteChange={this.onRouteChange} state={this.state}/>
+        <Navbar route={this.state.route} onRouteChange={this.onRouteChange}/>
         {
-          this.state.route === 'signin' 
-          ? <Signin onRouteChange={this.onRouteChange} 
-             loadUser={this.loadUser} />
-          :(
-            this.state.route === 'signup'
-            ? <Signup onRouteChange={this.onRouteChange} loadUser={this.loadUser}/>
-            :<div>
-              <Rank name={this.state.user.name} rank={this.state.user.entries}/>
-              <ImageForm onInputChange = {this.onInputChange} onSubmit = {this.onSubmit}/>
-              <FaceRecognition imageURL = {this.state.imageURL} box = {this.state.box} />
-             </div>
-          )      
+          route === 'signin' &&  <Signin onRouteChange={this.onRouteChange} 
+                                  loadUser={this.loadUser} />
+        }
+        {
+          route === 'signup' && <Signup onRouteChange={this.onRouteChange} 
+                                loadUser={this.loadUser} />
+        }
+          
+         {
+            route === 'home' &&
+            <div>
+                <Rank name={this.state.user.name} rank={this.state.user.entries}/>
+                <ImageForm onInputChange = {this.onInputChange} onSubmit = {this.onSubmit}/>
+                <FaceRecognition imageURL = {this.state.imageURL} box = {this.state.box} />
+            </div>
         }
       </div>
     );
