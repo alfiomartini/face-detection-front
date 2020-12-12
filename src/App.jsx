@@ -1,42 +1,14 @@
 import { React, Component } from 'react';
 import './App.css';
-import Navigation from './components//Navigation.jsx';
 import ImageForm from './components/ImageForm.jsx';
 import Rank from './components/Rank.jsx';
 import Particles from 'react-particles-js';
-import Clarifai from 'clarifai';
 import FaceRecognition from './components/FaceRecognition.jsx'
 import Signin from './components/auth/Signin.jsx';
 import Signup from './components/auth/Signup.jsx';
-import Navbar from './components/Navbar'
-
-const app = new Clarifai.App(
-  // have to save this in an environment variable
-  // https://medium.com/@trekinbami/using-environment-variables-in-react-6b0a99d83cf5
-  // https://create-react-app.dev/docs/adding-custom-environment-variables/
-  {
-    apiKey: '5e80f6ee89054099babe7674fb1c7dcd'
-  }
-)
-
-const particlesParams = {
-  particles: {
-    line_linked: {
-      shadow: {
-        enable: true,
-        color: "#3CA9D1",
-        blur: 5
-      }
-    },
-    number: {
-      density: {
-        enable: true,
-        value_area: 800,
-      },
-      value: 120,
-    }
-  }
-}
+import Navbar from './components/Navbar';
+import Clarifai from 'clarifai';
+import { app, particlesParams } from './Consts';
 
 class App extends Component{
   constructor(){
