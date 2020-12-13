@@ -8,29 +8,17 @@ import Signin from './components/auth/Signin.jsx';
 import Signup from './components/auth/Signup.jsx';
 import Navbar from './components/Navbar';
 import Clarifai from 'clarifai';
-import { app, particlesParams } from './Consts';
+import { app, particlesParams, initState } from './Consts';
 
 class App extends Component{
   constructor(){
     super();
-    this.state = {
-      // input and imageURL contain the same data
-      input:'',
-      imageURL:'',
-      box: {},
-      route: 'signin',
-      user:{
-        id:0,
-        name:'',
-        email:'',
-        entries:0,
-        joined:''
-      }
-    }
+    this.state =  initState;
   }
 
   loadUser = (user) => {
-    this.setState({user:user});
+    initState.user = user;
+    this.setState(initState);
   }
 
   componentDidMount(){
@@ -133,7 +121,10 @@ class App extends Component{
             <div>
                 <Rank name={this.state.user.name} rank={this.state.user.entries}/>
                 <ImageForm onInputChange = {this.onInputChange} onSubmit = {this.onSubmit}/>
-                <FaceRecognition imageURL = {this.state.imageURL} box = {this.state.box} />
+                {
+                  this.state.imageURL && 
+                  <FaceRecognition imageURL = {this.state.imageURL} box = {this.state.box} />
+                }
             </div>
         }
       </div>

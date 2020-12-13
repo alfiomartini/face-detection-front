@@ -1,5 +1,20 @@
 import Clarifai from 'clarifai';
 
+const initState = {
+  // input and imageURL contain the same data
+  input:'',
+  imageURL:'',
+  box: {},
+  route: 'signin',
+  user:{
+    id:0,
+    name:'',
+    email:'',
+    entries:0,
+    joined:''
+  }
+}
+
 const app = new Clarifai.App(
   // have to save this in an environment variable
   // https://medium.com/@trekinbami/using-environment-variables-in-react-6b0a99d83cf5
@@ -28,4 +43,4 @@ const particlesParams = {
   }
 }
 
-export { app, particlesParams}
+export { app, particlesParams, initState}
