@@ -7,8 +7,7 @@ import FaceRecognition from './components/FaceRecognition.jsx'
 import Signin from './components/auth/Signin.jsx';
 import Signup from './components/auth/Signup.jsx';
 import Navbar from './components/Navbar';
-import Clarifai from 'clarifai';
-import { app, particlesParams, initState } from './Consts';
+import {particlesParams, initState } from './Consts';
 
 class App extends Component{
   constructor(){
@@ -76,22 +75,26 @@ class App extends Component{
 
   onSubmit = (event) => {
     this.setState({imageURL: this.state.input});
-    app.models
-      .predict(
-        Clarifai.FACE_DETECT_MODEL,
-        this.state.input)
-      .then(resp => {
-        const box = this.calcFaceLocation(resp);
-        this.displayFaceBox(box);
-        this.updateRank();
-        // 'https://samples.clarifai.com/face-det.jpg')
-        // console.log(resp);
-        // console.log(resp.outputs[0].data.regions[0].region_info.bounding_box);
-        // resp.outputs[0].data.regions.forEach(region => {
-        //    console.log(region.region_info.bounding_box);
-        // });
+    fetch(`http://localhost:3100/model`, {
+      method:'post',
+      headers:{'Content-type': 'application/json'},
+      body: JSON.stringify({
+       image_url: this.state.input
       })
-      .catch(err => console.log(err));
+    })
+    .then(resp => resp.json())
+    .then(resp => {
+      const box = this.calcFaceLocation(resp);
+      this.displayFaceBox(box);
+      this.updateRank();
+      // 'https://samples.clarifai.com/face-det.jpg')
+      // console.log(resp);
+      // console.log(resp.outputs[0].data.regions[0].region_info.bounding_box);
+      // resp.outputs[0].data.regions.forEach(region => {
+      //    console.log(region.region_info.bounding_box);
+      // });
+    })
+    .catch(err => console.log(err));
   }
 
   onRouteChange = (route) => {
