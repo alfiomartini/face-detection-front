@@ -7,7 +7,7 @@ import FaceRecognition from './components/FaceRecognition.jsx'
 import Signin from './components/auth/Signin.jsx';
 import Signup from './components/auth/Signup.jsx';
 import Navbar from './components/Navbar';
-import {particlesParams, initState } from './Consts';
+import {particlesParams, initState, API_URL } from './Consts';
 
 class App extends Component{
   constructor(){
@@ -21,7 +21,7 @@ class App extends Component{
   }
 
   componentDidMount(){
-    fetch('http://localhost:3100')
+    fetch(API_URL)
       .then(resp => resp.json())
       .then(data => console.log(data))
   }
@@ -52,7 +52,7 @@ class App extends Component{
 
   updateRank = () => {
     const { user } = this.state;
-    fetch(`http://localhost:3100/image`, {
+    fetch(`${API_URL}/image`, {
       method:'put',
       headers:{'Content-type': 'application/json'},
       body: JSON.stringify({
@@ -75,18 +75,23 @@ class App extends Component{
 
   onSubmit = (event) => {
     this.setState({imageURL: this.state.input});
-    fetch(`http://localhost:3100/model`, {
+    fetch(`${API_URL}/model`, {
       method:'post',
       headers:{'Content-type': 'application/json'},
       body: JSON.stringify({
        image_url: this.state.input
       })
     })
-    .then(resp => resp.json())
+    .then(resp => resp.json().then(data => {
+      return {status: resp.status, body: data};
+    }))
     .then(resp => {
-      const box = this.calcFaceLocation(resp);
-      this.displayFaceBox(box);
-      this.updateRank();
+      if (resp.status === 200){
+        const box = this.calcFaceLocation(resp.body);
+        this.displayFaceBox(box);
+        this.updateRank();
+      }
+     
       // 'https://samples.clarifai.com/face-det.jpg')
       // console.log(resp);
       // console.log(resp.outputs[0].data.regions[0].region_info.bounding_box);

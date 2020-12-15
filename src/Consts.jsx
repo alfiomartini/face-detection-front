@@ -1,4 +1,6 @@
-import Clarifai from 'clarifai';
+ 
+const API_URL = 'https://facedet-api.herokuapp.com'
+// const API_URL = 'http://localhost:3100'
 
 const initState = {
   // input and imageURL contain the same data
@@ -14,15 +16,6 @@ const initState = {
     joined:''
   }
 }
-
-const app = new Clarifai.App(
-  // have to save this in an environment variable
-  // https://medium.com/@trekinbami/using-environment-variables-in-react-6b0a99d83cf5
-  // https://create-react-app.dev/docs/adding-custom-environment-variables/
-  {
-    apiKey: '5e80f6ee89054099babe7674fb1c7dcd'
-  }
-)
 
 const particlesParams = {
   particles: {
@@ -43,4 +36,4 @@ const particlesParams = {
   }
 }
 
-export { app, particlesParams, initState}
+export { particlesParams, initState, API_URL }

@@ -1,5 +1,6 @@
 import { React, Component } from 'react';
 import './Signup.css';
+import { API_URL } from '../../Consts';
 
 class Signup extends Component {
   constructor(props){
@@ -25,7 +26,7 @@ class Signup extends Component {
 
   onSubmitSignup = () => {
     const {signUpName, signUpEmail, signUpPassword} = this.state;
-    fetch('http://localhost:3100/register', {
+    fetch(`${API_URL}/register`, {
       method:'post',
       headers:{'Content-type': 'application/json'},
       body: JSON.stringify({

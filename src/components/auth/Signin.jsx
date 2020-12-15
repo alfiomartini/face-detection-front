@@ -1,5 +1,6 @@
 import { React, Component }  from 'react';
 import './Signin.css';
+import { API_URL } from '../../Consts';
 
 // destructuring in a react class
 // https://medium.com/@lcriswell/destructuring-props-in-react-b1c295005ce0
@@ -23,7 +24,7 @@ class Signin extends Component{
 
   onSubmitSignin = () => {
     const { signInEmail, signInPassword} = this.state;
-    fetch('http://localhost:3100/signin', {
+    fetch(`${API_URL}/signin`, {
       method:'post',
       headers:{'Content-type': 'application/json'},
       body: JSON.stringify({
