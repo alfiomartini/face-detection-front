@@ -6,7 +6,9 @@ const initState = {
   // input and imageURL contain the same data
   input:'',
   imageURL:'',
+  loaded:false,
   box: {},
+  boxes:[],
   route: 'signin',
   user:{
     id:0,

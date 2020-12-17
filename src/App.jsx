@@ -26,6 +26,27 @@ class App extends Component{
       .then(data => console.log(data))
   }
 
+  calcFacesLocations = (data) => {
+    const image = document.getElementById('inputImg');
+    const width = Number(image.width);
+    const height = Number(image.height);
+    console.log('data regions', data.outputs[0].data.regions);
+    const boxes = data.outputs[0].data.regions.map((region, index) => {
+      const { top_row, 
+        left_col, 
+        right_col, 
+        bottom_row } = 
+           data.outputs[0].data.regions[index].region_info.bounding_box;
+        return {
+          left : left_col * width,
+          top : top_row * height,
+          right: width - (right_col * width),
+          bottom : height - (bottom_row * height)
+        }
+      });
+      return boxes;
+  }
+
   calcFaceLocation = (data) => {
     const { top_row, 
             left_col, 
@@ -46,8 +67,11 @@ class App extends Component{
   }
 
   displayFaceBox = (box) => {
-    // console.log('box', box);
     this.setState({box:box});
+  }
+
+  displayFacesBoxes = (boxes) => {
+    this.setState({boxes:boxes});
   }
 
   updateRank = () => {
@@ -74,7 +98,8 @@ class App extends Component{
   } 
 
   onSubmit = (event) => {
-    this.setState({imageURL: this.state.input});
+    this.setState({imageURL: this.state.input,
+                  boxes:[]});
     fetch(`${API_URL}/model`, {
       method:'post',
       headers:{'Content-type': 'application/json'},
@@ -87,17 +112,13 @@ class App extends Component{
     }))
     .then(resp => {
       if (resp.status === 200){
-        const box = this.calcFaceLocation(resp.body);
-        this.displayFaceBox(box);
+        // const box = this.calcFaceLocation(resp.body);
+        // this.displayFaceBox(box);
+        const boxes = this.calcFacesLocations(resp.body);
+        this.displayFacesBoxes(boxes);
         this.updateRank();
       }
-     
       // 'https://samples.clarifai.com/face-det.jpg')
-      // console.log(resp);
-      // console.log(resp.outputs[0].data.regions[0].region_info.bounding_box);
-      // resp.outputs[0].data.regions.forEach(region => {
-      //    console.log(region.region_info.bounding_box);
-      // });
     })
     .catch(err => console.log(err));
   }
@@ -130,8 +151,12 @@ class App extends Component{
                 <Rank name={this.state.user.name} rank={this.state.user.entries}/>
                 <ImageForm onInputChange = {this.onInputChange} onSubmit = {this.onSubmit}/>
                 {
-                  this.state.imageURL && 
-                  <FaceRecognition imageURL = {this.state.imageURL} box = {this.state.box} />
+                  // this.loaded && 
+                  <FaceRecognition 
+                      imageURL = {this.state.imageURL} 
+                      box = {this.state.box}
+                      boxes = {this.state.boxes}
+                   />
                 }
             </div>
         }

@@ -1,5 +1,6 @@
 {
   "name": "smartbrain",
+  "homepage": "https://alfiomartini.github.io/face-detection-front",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -16,7 +17,7 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "serve -s build",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

@@ -2,15 +2,20 @@ import React from 'react';
 import './FaceRecognition.css';
 
 const FaceRecognition = (props) => {
-  const { imageURL, box } = props;
-  // console.log('face', box.top, box.right, box.left, box.bottom);
+  const { imageURL, boxes } = props;
+  console.log('Face boxes image', boxes);
+  const boxList = boxes.map((box, index) => {
+      return (
+        <div className='bounding-box' key={index}
+          style={{top:box.top, right:box.right, left:box.left, bottom:box.bottom }}>
+        </div>
+      )
+  });
   return (
     <div className='face-image mt-3'>
       <div className='image-box'>
         <img src={imageURL} alt='' id= 'inputImg' />
-        <div className='bounding-box' 
-          style={{top:box.top, right:box.right, left:box.left, bottom:box.bottom }}>
-        </div>
+        <div>{boxList}</div>
       </div>
     </div>
   )
