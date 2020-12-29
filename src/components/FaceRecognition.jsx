@@ -3,7 +3,6 @@ import './FaceRecognition.css';
 
 const FaceRecognition = (props) => {
   const { imageURL, boxes } = props;
-  console.log('Face boxes image', boxes);
   const boxList = boxes.map((box, index) => {
       return (
         <div className='bounding-box' key={index}

@@ -30,7 +30,8 @@ class App extends Component{
     const image = document.getElementById('inputImg');
     const width = Number(image.width);
     const height = Number(image.height);
-    console.log('data regions', data.outputs[0].data.regions);
+    // this object mimics how position works in css
+    // see: https://css-tricks.com/almanac/properties/t/top-right-bottom-left/
     const boxes = data.outputs[0].data.regions.map((region, index) => {
       const { top_row, 
         left_col, 
@@ -47,28 +48,6 @@ class App extends Component{
       return boxes;
   }
 
-  calcFaceLocation = (data) => {
-    const { top_row, 
-            left_col, 
-            right_col, 
-            bottom_row } = data.outputs[0].data.regions[0].region_info.bounding_box;
-    const image = document.getElementById('inputImg');
-    const width = Number(image.width);
-    const height = Number(image.height);
-    // console.log(width, height);
-    // this object mimics how position works in css
-    // see: https://css-tricks.com/almanac/properties/t/top-right-bottom-left/
-    return {
-      left : left_col * width,
-      top : top_row * height,
-      right: width - (right_col * width),
-      bottom : height - (bottom_row * height)
-    }
-  }
-
-  displayFaceBox = (box) => {
-    this.setState({box:box});
-  }
 
   displayFacesBoxes = (boxes) => {
     this.setState({boxes:boxes});
@@ -112,8 +91,6 @@ class App extends Component{
     }))
     .then(resp => {
       if (resp.status === 200){
-        // const box = this.calcFaceLocation(resp.body);
-        // this.displayFaceBox(box);
         const boxes = this.calcFacesLocations(resp.body);
         this.displayFacesBoxes(boxes);
         this.updateRank();
@@ -124,7 +101,6 @@ class App extends Component{
   }
 
   onRouteChange = (route) => {
-    // console.log('state', this.state);
     this.setState({route:route});
   }
 

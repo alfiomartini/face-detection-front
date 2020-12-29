@@ -36,7 +36,6 @@ class Signin extends Component{
         return ({status: resp.status, body: data})
       }))
       .then(obj => {
-        console.log('resp', obj);
         if (obj.status === 200){
           this.props.loadUser(obj.body.user);
           this.props.onRouteChange('home');
