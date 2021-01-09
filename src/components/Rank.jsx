@@ -6,7 +6,7 @@ const Rank = (props) => {
   return (
     <div className='rank mt-4 text-center'>
       <div className='rank-message'>
-        {`${name}, your current rank is ...`}
+        {`${name}, your current number of entries is ...`}
       </div>
       <div className='rank-number'>
         {`${rank}`}
