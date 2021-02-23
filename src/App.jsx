@@ -55,7 +55,8 @@ class App extends Component{
 
   updateRank = () => {
     const { user } = this.state;
-    fetch(`${API_URL}/image`, {
+    // console.log(user);
+    fetch(`${API_URL}/entries`, {
       method:'put',
       headers:{'Content-type': 'application/json'},
       body: JSON.stringify({

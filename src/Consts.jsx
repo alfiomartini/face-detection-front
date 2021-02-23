@@ -1,5 +1,7 @@
  
 const API_URL = 'https://facedet-api.herokuapp.com'
+
+// development API_URL
 // const API_URL = 'http://localhost:3100'
 
 const initState = {
