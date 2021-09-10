@@ -1,6 +1,7 @@
 {
   "name": "smartbrain",
   "version": "0.1.0",
+  "homepage": "https://alfiomartini.github.io/face-detection",
   "private": true,
   "engines": {
     "node": ">=14"
@@ -20,6 +21,7 @@
   },
   "scripts": {
     "start": "serve -s build",
+    "start:dev":"react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
