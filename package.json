@@ -1,7 +1,7 @@
 {
   "name": "smartbrain",
   "version": "0.1.0",
-  "homepage": "https://alfiomartini.github.io/face-detection",
+  "homepage": "https://alfiomartini.github.io/face-detection-front",
   "private": true,
   "engines": {
     "node": ">=14"
